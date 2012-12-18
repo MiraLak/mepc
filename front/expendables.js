@@ -30,7 +30,12 @@
             $('#btn-dialog-hire-soldier').one('click', _.bind(function() {
                 $(this).addClass('disabled');
                 $('#hire-soldier-dialog').modal('hide');
-                // TODO : Make the ajax call
+                $.ajax({
+                	  type: 'POST',
+                	  url: 'http://' + dataHost +'/data/hire/'+this.getAttribute('soldier-id'),
+                	   error: function(xhr) { alert("KO ! You cannot hire that guys"+xhr.status)},
+                	  dataType: 'jsonp'
+                	});
             }, event.target)); // bind function on current target which is the hire button
         });
     };

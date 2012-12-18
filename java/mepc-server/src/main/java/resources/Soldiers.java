@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -42,7 +42,7 @@ public class Soldiers {
 		public List<Soldier> soldiers;
 	}
 
-	private static boolean stalonneHired = false;
+	private static boolean stalloneHired = false;
 
 	@GET
 	@Path("soldiers.json")
@@ -52,14 +52,18 @@ public class Soldiers {
 				.<String, List<ThreeSoldiers>> of(
 						"soldiers",
 						newArrayList(
-								new ThreeSoldiers(newArrayList(new Soldier("stallone", "Sylvester Stallone",
-										"This ex-boxer is a vietnâm veteran that really had a rough."), new Soldier("statham", "Jason Statham",
-										"Kickboxing expert, body-to-body, it leaves no chance to your enemies."), new Soldier("li", "Jet Li",
-										"Do not be fooled by its size, this man can send you to the mat quickly thanks to its speed."))),
+								new ThreeSoldiers(
+										newArrayList(
+												new Soldier("stallone", "Sylvester Stallone",
+														"This ex-boxer is a vietnâm veteran that really had a rough."),
+												new Soldier("statham", "Jason Statham",
+														"Kickboxing expert, body-to-body, it leaves no chance to your enemies."),
+												new Soldier("li", "Jet Li",
+														"Do not be fooled by its size, this man can send you to the mat quickly thanks to its speed."))),
 								new ThreeSoldiers(newArrayList(new Soldier("lundgren", "Dolph Lundgren",
-										"The Russian soldier has hardened his body to the point it looks like a robot."), new Soldier("norris",
-										"Chuck Norris", "You are not hiring Chuck Norris, this is Chuck Norris that hires you."), new Soldier(
-										"van-damme", "Jean-Claude Van Damme", "This warrior philosopher is aware."))),
+										"The Russian soldier has hardened his body to the point it looks like a robot."), new Soldier(
+										"norris", "Chuck Norris", "You are not hiring Chuck Norris, this is Chuck Norris that hires you."),
+										new Soldier("van-damme", "Jean-Claude Van Damme", "This warrior philosopher is aware."))),
 								new ThreeSoldiers(
 										newArrayList(
 												new Soldier("willis", "Bruce Willis",
@@ -78,13 +82,20 @@ public class Soldiers {
 		return new JSONWithPadding(allSoldiers, callbackName);
 	}
 
-	@PUT
-	@Path("hire/stalonne")
+	@POST
+	@Path("hire/stallone")
 	public void hireSoldier() {
-		if (stalonneHired) {
-			final Response error = status(Status.FORBIDDEN).entity("Sorry, stalonne is already hired...").build();
+		if (stalloneHired) {
+			final Response error = status(Status.FORBIDDEN).entity("Sorry, stallone is already hired...").build();
 			throw new WebApplicationException(error);
 		}
-		stalonneHired = true;
+		stalloneHired = true;
+	}
+
+	@POST
+	@Path("hire/norris")
+	public void hireChuckNorris() {
+		final Response error = status(Status.FORBIDDEN).entity("You can never hire chuck norris because chuck norris hired you...").build();
+		throw new WebApplicationException(error);
 	}
 }

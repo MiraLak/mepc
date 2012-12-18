@@ -48,9 +48,15 @@ public class DataTest {
 	}
 
 	@Test
-	public void should_not_hire_stalonne_twice() throws Exception {
-		final String hireURL = format("http://%s/data/hire/stalonne", getAppHost());
-		expect().statusCode(SC_NO_CONTENT).when().put(hireURL);
-		expect().statusCode(SC_FORBIDDEN).body(is("Sorry, stalonne is already hired...")).when().put(hireURL);
+	public void should_not_hire_stallone_twice() throws Exception {
+		final String hireURL = format("http://%s/data/hire/stallonne", getAppHost());
+		expect().statusCode(SC_NO_CONTENT).when().post(hireURL);
+		expect().statusCode(SC_FORBIDDEN).body(is("Sorry, stallone is already hired...")).when().post(hireURL);
+	}
+	
+	@Test
+	public void should_not_hire_norris() throws Exception {
+		final String hireURL = format("http://%s/data/hire/norris", getAppHost());
+		expect().statusCode(SC_FORBIDDEN).body(is("You can never hire chuck norris because chuck norris hired you...")).when().post(hireURL);
 	}
 }
